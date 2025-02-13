@@ -4,6 +4,15 @@ WORKDIR /app
 
 COPY package*.json ./
 
+FROM damianboni/vite
+
+WORKDIR /app
+
+COPY package*.json ./
+
+COPY . .
+
+
 RUN npm install
 
 
