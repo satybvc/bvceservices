@@ -11,7 +11,7 @@ COPY . .
 
 RUN vite build
 
-FROM nginx:latest
+FROM nginx:1.21.0-alpine
 
 COPY --from=0 /app/build /usr/share/nginx/html
 
