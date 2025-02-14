@@ -7,3 +7,6 @@ RUN npm run build
 
 FROM nginx:alpine
 COPY --from=tondumal /dhondhu/build/ /usr/share/nginx/html/
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD curl -f http://http://20.199.81.100/health || exit 1
