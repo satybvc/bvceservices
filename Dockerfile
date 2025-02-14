@@ -1,30 +1,9 @@
-# Stage 1: Build the application using Node.js and Vite
-FROM node:18-alpine AS build
-
-WORKDIR /app
-
-# Copy package.json and package-lock.json
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application files
+# Maksad - Custom Docker Image bnana hai todo ui ki
+FROM node:16.20.2 AS tondumal
+WORKDIR /dhondhu
 COPY . .
-
-# Build the application using Vite
+RUN npm install  
 RUN npm run build
 
-# Stage 2: Serve the application using Nginx
-FROM nginx:1.21.0-alpine
-
-# Copy custom Nginx configuration
-#COPY nginx.conf /etc/nginx/nginx.conf
-
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Expose port 80
-EXPOSE 80
-
-# Start Nginx in the foreground
-CMD ["nginx", "-g", "daemon off;"]
+FROM nginx:alpine
+COPY --from=tondumal /dhondhu/build/ /usr/share/nginx/html/
