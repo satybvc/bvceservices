@@ -25,7 +25,7 @@ COPY . .
 
 RUN vite run build
 
-FROM nginx:alpine
+FROM nginx
 
 COPY --from=builder /app/dist /usr/share/nginx/html
 
