@@ -17,7 +17,7 @@ RUN ls -la /app/dist
 
 # Stage 2: Serve with Nginx
 FROM nginx:alpine
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --FROM=builder /app/dist /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
