@@ -2,14 +2,14 @@
 FROM node:18-alpine as builder
 WORKDIR /app
 
-# Copy package files and install dependencies
+# Copy package.json and package-lock.json first (for caching)
 COPY package.json package-lock.json ./
 RUN npm install
 
-# Copy the rest of the application
+# Copy the entire application
 COPY . .
 
-# Build the Vite project (output goes to /app/dist)
+# Build the Vite project (Vite outputs to /app/dist)
 RUN npm run build
 
 # Debugging: List the contents of /app/dist
@@ -19,7 +19,7 @@ RUN ls -la /app/dist
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Expose port 80 for web access
+# Expose port 80
 EXPOSE 80
 
 # Start Nginx
