@@ -1,24 +1,13 @@
-
+# Stage 1: Build React app
 FROM node:18-alpine as builder
-
 WORKDIR /app
-
-COPY package.json package-lock.json ./
-
+COPY package*.json ./
 RUN npm install
-
-RUN npm install -g vite
-
 COPY . .
+RUN npm run build
 
-RUN vite run build
-
-FROM nginx
-
-COPY --from=builder /app/dist /usr/share/nginx/html
-
-EXPOSE 5173
+# Stage 2: Serve with Nginx
+FROM nginx:alpine
+COPY --from=builder /app/build /usr/share/nginx/html
+EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
-
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD curl -f http://http://20.199.81.100/health || exit 1
