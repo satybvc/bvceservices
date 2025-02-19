@@ -1,5 +1,5 @@
 # Stage 1: Build the Vite app
-FROM node:18-alpine as builder
+FROM node:18-alpine AS builder
 WORKDIR /app
 
 # Copy package.json and package-lock.json first (for caching)
